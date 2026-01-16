@@ -1,9 +1,14 @@
 package com.yourcompany.sap.engine;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SapKeyboard {
     private final WebDriver driver;
+    private static final Logger LOG = Logger.getLogger(SapKeyboard.class.getName());
 
     public SapKeyboard(WebDriver driver) {
         this.driver = driver;
@@ -12,17 +17,66 @@ public class SapKeyboard {
     private WebElement target() {
         try {
             return driver.switchTo().activeElement();
-        } catch (Exception ignored) {
+        } catch (WebDriverException e) {
+            LOG.log(Level.FINE, "activeElement() failed, falling back to body", e);
+        } catch (Exception e) {
+            LOG.log(Level.FINER, "unexpected error getting active element", e);
         }
-        return driver.findElement(By.tagName("body"));
+
+        try {
+            return driver.findElement(By.tagName("body"));
+        } catch (NoSuchElementException e) {
+            LOG.log(Level.WARNING, "no <body> element found; returning null", e);
+            return null;
+        }
     }
 
     private void send(CharSequence... keys) {
-        target().sendKeys(keys);
+        WebElement t = target();
+        if (t == null) {
+            LOG.warning("No target to send keys to");
+            return;
+        }
+
+        try {
+            t.sendKeys(keys);
+        } catch (WebDriverException e) {
+            LOG.log(Level.FINE, "sendKeys failed; attempting JS fallback", e);
+            jsSend(t, concat(keys));
+        }
     }
 
     private void chord(Keys... keys) {
         send(Keys.chord(keys));
+    }
+
+    private static String concat(CharSequence... keys) {
+        StringBuilder sb = new StringBuilder();
+        for (CharSequence k : keys) sb.append(k);
+        return sb.toString();
+    }
+
+    private void jsSend(WebElement element, String text) {
+        if (!(driver instanceof JavascriptExecutor)) return;
+        String script = "var el = arguments[0]; var text = arguments[1];\n"
+                + "if (!el) return false;\n"
+                + "el.focus();\n"
+                + "function fire(n, opts){var e = new KeyboardEvent(n, opts); el.dispatchEvent(e);}\n"
+                + "for (var i=0;i<text.length;i++){\n"
+                + "  var ch = text.charAt(i);\n"
+                + "  fire('keydown', {key: ch, char: ch, bubbles:true});\n"
+                + "  fire('keypress', {key: ch, char: ch, bubbles:true});\n"
+                + "  el.value = (el.value || '') + ch;\n"
+                + "  fire('input', {bubbles:true});\n"
+                + "  fire('keyup', {key: ch, char: ch, bubbles:true});\n"
+                + "}\n"
+                + "return true;";
+
+        try {
+            ((JavascriptExecutor) driver).executeScript(script, element, text);
+        } catch (Exception e) {
+            LOG.log(Level.WARNING, "JS fallback send failed", e);
+        }
     }
 
     // Function keys
