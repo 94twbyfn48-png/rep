@@ -10,10 +10,21 @@ public class SapKeyboard {
     private final WebDriver driver;
     private static final Logger LOG = Logger.getLogger(SapKeyboard.class.getName());
 
+    /**
+     * Keyboard helper for sending keys to the SAP WebGUI.
+     *
+     * @param driver WebDriver instance used for sending keys and executing JS fallbacks
+     */
     public SapKeyboard(WebDriver driver) {
         this.driver = driver;
     }
 
+    /**
+     * Determine the element that should receive keyboard events. Attempts to
+     * use the active element and falls back to the document body.
+     *
+     * @return element to receive keys or null if none available
+     */
     private WebElement target() {
         try {
             return driver.switchTo().activeElement();
@@ -31,6 +42,12 @@ public class SapKeyboard {
         }
     }
 
+    /**
+     * Send key sequences to the current target. If native WebDriver sendKeys fails,
+     * attempt a JS-based fallback.
+     *
+     * @param keys key sequences to send
+     */
     private void send(CharSequence... keys) {
         WebElement t = target();
         if (t == null) {
@@ -46,16 +63,26 @@ public class SapKeyboard {
         }
     }
 
+    /**
+     * Send a chord (combination) of keys, using Selenium's Keys.chord.
+     */
     private void chord(Keys... keys) {
         send(Keys.chord(keys));
     }
 
+    /**
+     * Concatenate provided CharSequence pieces into a single string used by JS fallback.
+     */
     private static String concat(CharSequence... keys) {
         StringBuilder sb = new StringBuilder();
         for (CharSequence k : keys) sb.append(k);
         return sb.toString();
     }
 
+    /**
+     * JS fallback to dispatch keyboard events and append characters to an element's value.
+     * This emulates typing at a DOM level for inputs where sendKeys cannot reach.
+     */
     private void jsSend(WebElement element, String text) {
         if (!(driver instanceof JavascriptExecutor)) return;
         String script = "var el = arguments[0]; var text = arguments[1];\n"
@@ -79,6 +106,11 @@ public class SapKeyboard {
         }
     }
 
+    /**
+     * Send a function key (F1..F12).
+     *
+     * @param n function key number
+     */
     // Function keys
     public void f(int n) {
         send(Keys.valueOf("F" + n));
@@ -98,20 +130,70 @@ public class SapKeyboard {
     public void f12() { f(12); }
 
     // Common SAP-ish
+    /**
+     * Press Enter key.
+     */
     public void enter() { send(Keys.ENTER); }
+
+    /**
+     * Press SAP 'Back' (mapped to F3 by convention).
+     */
     public void back() { f3(); }
+
+    /**
+     * Press SAP 'Save' (mapped to F11 by convention).
+     */
     public void save() { f11(); }
+
+    /**
+     * Press SAP 'Cancel' (mapped to F12 by convention).
+     */
     public void cancel() { f12(); }
+
+    /**
+     * Press Escape.
+     */
     public void esc() { send(Keys.ESCAPE); }
+
+    /**
+     * Press Tab.
+     */
     public void tab() { send(Keys.TAB); }
+
+    /**
+     * Press Shift+Tab.
+     */
     public void shiftTab() { chord(Keys.SHIFT, Keys.TAB); }
 
     // Combos
+    /**
+     * Send CTRL + k.
+     */
     public void ctrl(Keys k) { chord(Keys.CONTROL, k); }
+
+    /**
+     * Send SHIFT + k.
+     */
     public void shift(Keys k) { chord(Keys.SHIFT, k); }
+
+    /**
+     * Send ALT + k.
+     */
     public void alt(Keys k) { chord(Keys.ALT, k); }
+
+    /**
+     * Send CTRL + SHIFT + k.
+     */
     public void ctrlShift(Keys k) { chord(Keys.CONTROL, Keys.SHIFT, k); }
+
+    /**
+     * Send CTRL + ALT + k.
+     */
     public void ctrlAlt(Keys k) { chord(Keys.CONTROL, Keys.ALT, k); }
+
+    /**
+     * Send CTRL + SHIFT + ALT + k.
+     */
     public void ctrlShiftAlt(Keys k) { chord(Keys.CONTROL, Keys.SHIFT, Keys.ALT, k); }
 
     // Requested

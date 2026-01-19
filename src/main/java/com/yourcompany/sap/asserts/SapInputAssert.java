@@ -10,7 +10,20 @@ public class SapInputAssert {
         this.input = input;
         this.label = label;
     }
+    /**
+     * Create assertions scoped to a specific input identified by label.
+     *
+     * @param input input helper
+     * @param label label text to identify the input
+     */
+    public SapInputAssert(SapInput input, String label) {
+        this.input = input;
+        this.label = label;
+    }
 
+    /**
+     * Assert that the input value equals the expected string.
+     */
     public SapInputAssert assertValue(String expected) {
         String actual = input.getValueByLabel(label);
         if (actual == null || !expected.equals(actual)) {
@@ -19,6 +32,9 @@ public class SapInputAssert {
         return this;
     }
 
+    /**
+     * Assert that the input value is empty.
+     */
     public SapInputAssert assertEmpty() {
         String actual = input.getValueByLabel(label);
         if (actual != null && !actual.isBlank()) {
@@ -27,6 +43,9 @@ public class SapInputAssert {
         return this;
     }
 
+    /**
+     * Assert that the input value is not empty.
+     */
     public SapInputAssert assertNotEmpty() {
         String actual = input.getValueByLabel(label);
         if (actual == null || actual.isBlank()) {
@@ -35,6 +54,9 @@ public class SapInputAssert {
         return this;
     }
 
+    /**
+     * Assert that the input's maxlength attribute equals the expected value.
+     */
     public SapInputAssert assertMaxLength(int expected) {
         String maxLenStr = input.byLabel(label).getAttribute("maxlength");
         if (maxLenStr == null || maxLenStr.isBlank()) {
@@ -47,6 +69,9 @@ public class SapInputAssert {
         return this;
     }
 
+    /**
+     * Assert that the input is enabled.
+     */
     public SapInputAssert assertEnabled() {
         if (!input.byLabel(label).isEnabled()) {
             throw new SapAssertException(label + " is disabled");
@@ -54,6 +79,9 @@ public class SapInputAssert {
         return this;
     }
 
+    /**
+     * Assert that the input is disabled.
+     */
     public SapInputAssert assertDisabled() {
         if (input.byLabel(label).isEnabled()) {
             throw new SapAssertException(label + " is enabled");
@@ -61,6 +89,9 @@ public class SapInputAssert {
         return this;
     }
 
+    /**
+     * Assert that the input is readonly (by checking common attributes).
+     */
     public SapInputAssert assertReadOnly() {
         String ro = input.byLabel(label).getAttribute("readonly");
         if (ro == null) ro = input.byLabel(label).getAttribute("aria-readonly");

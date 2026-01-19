@@ -12,6 +12,20 @@ public class SapDropdownAssert {
         this.label = label;
     }
 
+    /**
+     * Create dropdown assertions for the control found by label.
+     *
+     * @param dropdown dropdown helper
+     * @param label    label text identifying the dropdown
+     */
+    public SapDropdownAssert(SapDropdown dropdown, String label) {
+        this.dropdown = dropdown;
+        this.label = label;
+    }
+
+    /**
+     * Assert that the currently selected option text equals expected.
+     */
     public SapDropdownAssert assertSelected(String expected) {
         Select sel = dropdown.byLabel(label);
         String actual = sel.getFirstSelectedOption().getText().trim();
@@ -21,6 +35,9 @@ public class SapDropdownAssert {
         return this;
     }
 
+    /**
+     * Assert that the dropdown contains an option with the given visible text.
+     */
     public SapDropdownAssert assertOptionsContain(String optionText) {
         Select sel = dropdown.byLabel(label);
         boolean found = sel.getOptions().stream().anyMatch(o -> optionText.equals(o.getText().trim()));

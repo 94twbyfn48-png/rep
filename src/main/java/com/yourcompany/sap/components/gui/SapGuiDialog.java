@@ -11,11 +11,24 @@ public class SapGuiDialog extends SapGuiElement {
         super(driver, root);
         this.root = root;
     }
+    /**
+     * Create dialog helper.
+     */
+    public SapGuiDialog(WebDriver driver, WebElement root) {
+        super(driver, root);
+        this.root = root;
+    }
 
+    /**
+     * Return true when the dialog element is displayed.
+     */
     public boolean isOpen() {
         return isDisplayed();
     }
 
+    /**
+     * Attempt to close the dialog using common selectors; falls back to JS removal.
+     */
     public void close() {
         try {
             // try common close selectors

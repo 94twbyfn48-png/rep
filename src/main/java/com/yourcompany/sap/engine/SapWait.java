@@ -14,11 +14,27 @@ public class SapWait {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
     }
 
+    /**
+     * Create a wait helper for the supplied driver.
+     *
+     * @param driver the webdriver instance
+     */
+    public SapWait(WebDriver driver) {
+        this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+    }
+
+    /**
+     * Wait until the document.readyState is 'complete'.
+     */
     public void pageReady() {
         wait.until(d -> "complete".equals(((JavascriptExecutor) d).executeScript("return document.readyState")));
     }
 
-    // Busy indicator selector’ları sistemine göre güncellenebilir
+    /**
+     * Wait until the page's busy indicators are not present.
+     * The selectors used here may be adjusted to match your system.
+     */
     public void notBusy() {
         wait.until(d -> d.findElements(By.cssSelector(".urBusy, .sapUiLocalBusyIndicator")).isEmpty());
     }

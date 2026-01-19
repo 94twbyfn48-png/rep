@@ -20,6 +20,11 @@ public abstract class BaseSapPage {
     public final SapPopup popup;
     public final SapToolbar toolbar;
 
+    /**
+     * Base page shared utilities and components for SAP pages.
+     *
+     * @param browser the WebDriver used by the page
+     */
     public BaseSapPage(WebDriver browser) {
         this.browser = browser;
 

@@ -14,7 +14,20 @@ public class SapGuiTable extends SapGuiElement {
         super(driver, tableRoot);
         this.tableRoot = tableRoot;
     }
+    /**
+     * Construct a table wrapper for an HTML table root element.
+     *
+     * @param driver    webdriver
+     * @param tableRoot root element of the table
+     */
+    public SapGuiTable(WebDriver driver, WebElement tableRoot) {
+        super(driver, tableRoot);
+        this.tableRoot = tableRoot;
+    }
 
+    /**
+     * Return table rows (safe-fail to empty list on errors).
+     */
     public List<WebElement> rows() {
         try {
             return tableRoot.findElements(By.xpath(".//tr"));
@@ -23,6 +36,9 @@ public class SapGuiTable extends SapGuiElement {
         }
     }
 
+    /**
+     * Return the cell at the specified 0-based row and 0-based column indices.
+     */
     public WebElement getCell(int rowIndex, int colIndex) {
         List<WebElement> r = rows();
         if (rowIndex < 0 || rowIndex >= r.size()) throw new IndexOutOfBoundsException("rowIndex");
@@ -31,6 +47,9 @@ public class SapGuiTable extends SapGuiElement {
         return cells.get(colIndex);
     }
 
+    /**
+     * Find the first row index containing the provided text. Returns -1 when not found.
+     */
     public int findRowIndexByCellText(String text) {
         List<WebElement> r = rows();
         for (int i = 0; i < r.size(); i++) {

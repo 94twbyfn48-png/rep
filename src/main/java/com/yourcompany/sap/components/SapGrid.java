@@ -28,7 +28,26 @@ public class SapGrid {
             return cell;
         }, 3, 300);
     }
+    /**
+     * Find a cell element given a 0-based row index and 1-based column index used by the SAP grid.
+     *
+     * @param rowIndex 0-based row index
+     * @param colIndex 1-based column index
+     * @return located cell WebElement
+     */
+    public WebElement findCellByRowCol(int rowIndex, int colIndex) {
+        String xp = String.format("//td[@lsmatrixrowindex='%d' and @lsmatrixcolindex='%d']", rowIndex, colIndex);
 
+        return SapRetry.get(() -> {
+            WebElement cell = driver.findElement(By.xpath(xp));
+            scrollIntoView(cell);
+            return cell;
+        }, 3, 300);
+    }
+
+    /**
+     * If the cell contains a textbox-like span, return that input element, otherwise return the cell itself.
+     */
     public WebElement getCellInput(WebElement cell) {
         try {
             return cell.findElement(By.xpath(".//span[@role='textbox']"));
@@ -37,11 +56,17 @@ public class SapGrid {
         }
     }
 
+    /**
+     * Return the trimmed text of a cell at given coordinates.
+     */
     public String getCellText(int row, int col) {
         WebElement cell = findCellByRowCol(row, col);
         return getCellInput(cell).getText().trim();
     }
 
+    /**
+     * Set the value of a cell by selecting the input and typing the value.
+     */
     public void setCellValue(int row, int col, String value) {
         WebElement cell = findCellByRowCol(row, col);
         WebElement input = getCellInput(cell);
@@ -100,6 +125,17 @@ public class SapGrid {
         return null;
     }
 
+    /**
+     * Return the first non-blank string from the provided values.
+     */
+    private static String firstNonBlank(String... vals) {
+        for (String v : vals) if (v != null && !v.isBlank()) return v;
+        return null;
+    }
+
+    /**
+     * Parse an int and return fallback when parsing fails.
+     */
     private static int safeParseInt(String s, int fallback) {
         try {
             return Integer.parseInt(s.trim());
@@ -194,6 +230,14 @@ public class SapGrid {
 
     // ===== Requested: scroll to row =====
 
+    /**
+     * Scroll the grid until the target row becomes visible or until maxScrolls
+     * scroll attempts are exhausted. Returns true when the row is visible.
+     *
+     * @param targetRow target row index to reveal
+     * @param maxScrolls maximum number of scroll attempts
+     * @return true if targetRow became visible
+     */
     public boolean scrollToRow(int targetRow, int maxScrolls) {
         WebElement anchor = findFirstDataCellSafe();
         WebElement scroller = findScrollableAncestor(anchor);
@@ -225,6 +269,15 @@ public class SapGrid {
 
     // ===== Virtualized full read =====
 
+    /**
+     * Read a potentially virtualized table by repeatedly scrolling and collecting
+     * visible rows until either the maximum row cap is reached or stalls exceed
+     * the provided stallRounds.
+     *
+     * @param maxRowsCap maximum number of rows to collect
+     * @param stallRounds number of rounds with no progress before stopping
+     * @return list of row maps
+     */
     public List<Map<String, String>> readTableVirtualized(int maxRowsCap, int stallRounds) {
         Map<Integer, String> ids = identifiers();
         if (ids.isEmpty()) throw new RuntimeException("No identifiers found for grid.");
