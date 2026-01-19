@@ -3,7 +3,7 @@ package com.yourcompany.sap.components;
 import com.thy.testlibrary.browser.Browser; // TODO: Update package if your framework uses a different one.
 import org.openqa.selenium.*;
 
-public class SapPopup {
+public class SapPopup implements SapPopupActions implements SapPopupActions {
     private final WebDriver driver;
 
     /**

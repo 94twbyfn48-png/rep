@@ -3,7 +3,7 @@ package com.yourcompany.sap.components;
 import com.thy.testlibrary.browser.Browser; // TODO: Update package if your framework uses a different one.
 import org.openqa.selenium.*;
 
-public class SapStatusBar {
+public class SapStatusBar implements SapStatusBarActions implements SapStatusBarActions {
     private final WebDriver driver;
 
     /**

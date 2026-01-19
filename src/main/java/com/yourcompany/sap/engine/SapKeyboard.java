@@ -7,7 +7,7 @@ import org.openqa.selenium.interactions.Actions;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SapKeyboard {
+public class SapKeyboard implements SapKeyboardActions implements SapKeyboardActions implements SapKeyboardActions {
     private final WebDriver driver;
     private static final Logger LOG = Logger.getLogger(SapKeyboard.class.getName());
 

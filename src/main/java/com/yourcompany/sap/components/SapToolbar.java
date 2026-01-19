@@ -3,7 +3,7 @@ package com.yourcompany.sap.components;
 import com.thy.testlibrary.browser.Browser; // TODO: Update package if your framework uses a different one.
 import org.openqa.selenium.*;
 
-public class SapToolbar {
+public class SapToolbar implements SapToolbarActions implements SapToolbarActions implements SapToolbarActions {
     private final WebDriver driver;
 
     /**

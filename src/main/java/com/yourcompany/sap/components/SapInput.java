@@ -4,7 +4,7 @@ import com.thy.testlibrary.browser.Browser; // TODO: Update package if your fram
 import com.yourcompany.sap.engine.SapLocator;
 import org.openqa.selenium.*;
 
-public class SapInput {
+public class SapInput implements SapInputActions {
     private final WebDriver driver;
 
     /**

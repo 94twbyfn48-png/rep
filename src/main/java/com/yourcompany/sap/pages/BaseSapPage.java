@@ -1,14 +1,24 @@
 package com.yourcompany.sap.pages;
 
+import com.yourcompany.sap.asserts.SapAssertFacade;
 import com.yourcompany.sap.asserts.SapAssert;
+import com.yourcompany.sap.components.SapCheckboxActions;
 import com.yourcompany.sap.components.SapCheckbox;
+import com.yourcompany.sap.components.SapDropdownActions;
 import com.yourcompany.sap.components.SapDropdown;
+import com.yourcompany.sap.components.SapGridActions;
 import com.yourcompany.sap.components.SapGrid;
+import com.yourcompany.sap.components.SapInputActions;
 import com.yourcompany.sap.components.SapInput;
+import com.yourcompany.sap.components.SapPopupActions;
 import com.yourcompany.sap.components.SapPopup;
+import com.yourcompany.sap.components.SapStatusBarActions;
 import com.yourcompany.sap.components.SapStatusBar;
+import com.yourcompany.sap.components.SapToolbarActions;
 import com.yourcompany.sap.components.SapToolbar;
+import com.yourcompany.sap.engine.SapKeyboardActions;
 import com.yourcompany.sap.engine.SapKeyboard;
+import com.yourcompany.sap.engine.SapWaitActions;
 import com.yourcompany.sap.engine.SapWait;
 
 import javax.annotation.PostConstruct;
@@ -29,34 +39,34 @@ import com.thy.testlibrary.browser.Browser;
 public abstract class BaseSapPage extends AbstractPage {
 
     /** Keyboard shortcuts and key-chords (F-keys, Ctrl/Shift combos, etc.). */
-    protected SapKeyboard keys;
+    protected SapKeyboardActions keys;
 
     /** Waiting utilities (document ready, busy indicator, etc.). */
-    protected SapWait wait;
+    protected SapWaitActions wait;
 
     /** Assertion facade for common SAP UI checks. */
-    protected SapAssert assertThat;
+    protected SapAssertFacade assertThat;
 
     /** SAP table/grid helpers (virtualization-aware reading/scrolling). */
-    protected SapGrid grid;
+    protected SapGridActions grid;
 
     /** Generic input helpers (text inputs). */
-    protected SapInput input;
+    protected SapInputActions input;
 
     /** Checkbox helpers. */
-    protected SapCheckbox checkbox;
+    protected SapCheckboxActions checkbox;
 
     /** Dropdown / combobox helpers. */
-    protected SapDropdown dropdown;
+    protected SapDropdownActions dropdown;
 
     /** Status bar helpers (messages, severity, etc.). */
-    protected SapStatusBar statusBar;
+    protected SapStatusBarActions statusBar;
 
     /** Popup/dialog helpers. */
-    protected SapPopup popup;
+    protected SapPopupActions popup;
 
     /** Toolbar helpers. */
-    protected SapToolbar toolbar;
+    protected SapToolbarActions toolbar;
 
     /**
      * Initializes all SAP helpers using the framework's {@link Browser}.

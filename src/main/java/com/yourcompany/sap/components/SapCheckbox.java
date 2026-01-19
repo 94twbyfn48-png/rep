@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 /**
  * Checkbox helper for SAP GUI for HTML.
  */
-public class SapCheckbox {
+public class SapCheckbox implements SapCheckboxActions {
 
     private final WebDriver driver;
 

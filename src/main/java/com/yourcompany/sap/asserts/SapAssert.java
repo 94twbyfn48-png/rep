@@ -10,7 +10,7 @@ import com.yourcompany.sap.components.SapStatusBar;
 /**
  * Root assertion facade that creates specific assertion helpers.
  */
-public class SapAssert {
+public class SapAssert implements SapAssertFacade implements SapAssertFacade implements SapAssertFacade implements SapAssertFacade {
 
     private final Browser browser;
 

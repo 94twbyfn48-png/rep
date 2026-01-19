@@ -6,7 +6,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class SapWait {
+public class SapWait implements SapWaitActions implements SapWaitActions implements SapWaitActions {
     private final WebDriver driver;
     private final WebDriverWait wait;
 

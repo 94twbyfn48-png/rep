@@ -6,7 +6,7 @@ import org.openqa.selenium.*;
 
 import java.util.*;
 
-public class SapGrid {
+public class SapGrid implements SapGridActions {
     private final WebDriver driver;
 
     /**

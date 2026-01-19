@@ -5,7 +5,7 @@ import com.thy.testlibrary.browser.Browser; // TODO: Update package if your fram
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Select;
 
-public class SapDropdown {
+public class SapDropdown implements SapDropdownActions implements SapDropdownActions {
     private final WebDriver driver;
 
     /**
