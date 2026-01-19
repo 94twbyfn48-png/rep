@@ -1,37 +1,20 @@
 package com.yourcompany.sap.engine;
 
 public class SapRetry {
-    public static <T> T get(java.util.concurrent.Callable<T> action, int attempts, long sleepMs) {
-        RuntimeException last = null;
-        for (int i = 0; i < attempts; i++) {
-            try {
-                return action.call();
-            } catch (RuntimeException re) {
-                last = re;
-            } catch (Exception e) {
-                last = new RuntimeException(e);
-            }
-            sleep(sleepMs);
-        }
-        throw (last != null) ? last : new RuntimeException("Retry failed");
-    }
-
-    public static void run(Runnable action, int attempts, long sleepMs) {
-        get(() -> {
-            action.run();
-            return true;
-        }, attempts, sleepMs);
-    }
-
     /**
-     * Run an action with retries, returning the result.
+     * Gets get operation.
      *
-     * @param action   the callable to execute
-     * @param attempts maximum number of attempts
-     * @param sleepMs  milliseconds to sleep between attempts
-     * @param <T>      return type
-     * @return the callable result
-     * @throws RuntimeException if all attempts fail
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param action input parameter
+     * @param attempts input parameter
+     * @param sleepMs input parameter
+     *
+     * @return operation result
      */
     public static <T> T get(java.util.concurrent.Callable<T> action, int attempts, long sleepMs) {
         RuntimeException last = null;
@@ -49,11 +32,19 @@ public class SapRetry {
     }
 
     /**
-     * Run a runnable with retries.
+     * Executes run operation.
      *
-     * @param action   the action to run
-     * @param attempts number of attempts
-     * @param sleepMs  sleep between attempts
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param action input parameter
+     * @param attempts input parameter
+     * @param sleepMs input parameter
+     *
+     * @return operation result
      */
     public static void run(Runnable action, int attempts, long sleepMs) {
         get(() -> {
@@ -63,15 +54,22 @@ public class SapRetry {
     }
 
     /**
-     * Sleep helper that preserves interrupt status when interrupted.
+     * Executes sleep operation.
      *
-     * @param ms milliseconds to sleep
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param ms input parameter
+     *
+     * @return operation result
      */
     private static void sleep(long ms) {
         try {
             Thread.sleep(ms);
-        } catch (InterruptedException ie) {
-            Thread.currentThread().interrupt();
+        } catch (InterruptedException ignored) {
         }
     }
 }

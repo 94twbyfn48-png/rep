@@ -7,10 +7,22 @@ import org.openqa.selenium.WebDriver;
 import java.nio.file.Path;
 
 public class SapFailureArtifactsExtension implements TestWatcher {
-    /**
-     * JUnit extension that captures screenshots and HTML on test failure.
-     */
+
     @Override
+    /**
+     * Executes testFailed operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param context input parameter
+     * @param cause input parameter
+     *
+     * @return operation result
+     */
     public void testFailed(ExtensionContext context, Throwable cause) {
         Object instance = context.getRequiredTestInstance();
         if (!(instance instanceof WebDriverProvider provider)) return;
@@ -24,8 +36,7 @@ public class SapFailureArtifactsExtension implements TestWatcher {
         try {
             SapEvidence.screenshot(driver, "FAIL", dir);
             SapEvidence.htmlDump(driver, "FAIL", dir);
-        } catch (Exception e) {
-            // Log or ignore - failing to write artifacts shouldn't mask the original failure
+        } catch (Exception ignored) {
         }
     }
 }

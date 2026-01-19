@@ -1,5 +1,6 @@
 package com.yourcompany.sap.components.gui;
 
+import com.thy.testlibrary.browser.Browser; // TODO: Update package if your framework uses a different one.
 import org.openqa.selenium.*;
 
 import java.util.logging.Level;
@@ -10,23 +11,33 @@ public class SapGuiElement {
     protected final WebElement el;
     private static final Logger LOG = Logger.getLogger(SapGuiElement.class.getName());
 
-    public SapGuiElement(WebDriver driver, WebElement el) {
-        this.driver = driver;
-        this.el = el;
-    }
     /**
-     * Create a lightweight wrapper around a WebElement with JS fallbacks.
+     * Creates a new SapGuiElement instance.
      *
-     * @param driver webdriver
-     * @param el     underlying element
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param driver input parameter
+     * @param el input parameter
      */
     public SapGuiElement(WebDriver driver, WebElement el) {
-        this.driver = driver;
+        this.driver = browser.getDriver();
         this.el = el;
     }
 
     /**
-     * Click the element. If native click fails, attempt a JS click.
+     * Performs click operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
      */
     public void click() {
         try {
@@ -40,8 +51,17 @@ public class SapGuiElement {
             }
         }
     }
+
     /**
-     * Return trimmed text of the element.
+     * Executes text operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
      */
     public String text() {
         try {
@@ -51,8 +71,17 @@ public class SapGuiElement {
             return "";
         }
     }
+
     /**
-     * Return whether the element is displayed (safe-fail false).
+     * Checks isDisplayed operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
      */
     public boolean isDisplayed() {
         try {
@@ -61,8 +90,19 @@ public class SapGuiElement {
             return false;
         }
     }
+
     /**
-     * Send keys to the element, falling back to a JS-based value append.
+     * Executes sendKeys operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param text input parameter
+     *
+     * @return operation result
      */
     public void sendKeys(String text) {
         try {
@@ -72,8 +112,19 @@ public class SapGuiElement {
             jsSend(text);
         }
     }
+
     /**
-     * JS fallback that appends text to element's value and fires an input event.
+     * Executes jsSend operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param text input parameter
+     *
+     * @return operation result
      */
     protected void jsSend(String text) {
         if (!(driver instanceof JavascriptExecutor)) return;

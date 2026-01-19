@@ -1,5 +1,6 @@
 package com.yourcompany.sap.engine;
 
+import com.thy.testlibrary.browser.Browser; // TODO: Update package if your framework uses a different one.
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 
@@ -11,19 +12,30 @@ public class SapKeyboard {
     private static final Logger LOG = Logger.getLogger(SapKeyboard.class.getName());
 
     /**
-     * Keyboard helper for sending keys to the SAP WebGUI.
+     * Creates a new SapKeyboard instance.
      *
-     * @param driver WebDriver instance used for sending keys and executing JS fallbacks
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param browser input parameter
      */
-    public SapKeyboard(WebDriver driver) {
-        this.driver = driver;
+    public SapKeyboard(Browser browser) {
+        this.driver = browser.getDriver();
     }
 
     /**
-     * Determine the element that should receive keyboard events. Attempts to
-     * use the active element and falls back to the document body.
+     * Executes target operation.
      *
-     * @return element to receive keys or null if none available
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
      */
     private WebElement target() {
         try {
@@ -43,10 +55,17 @@ public class SapKeyboard {
     }
 
     /**
-     * Send key sequences to the current target. If native WebDriver sendKeys fails,
-     * attempt a JS-based fallback.
+     * Executes send operation.
      *
-     * @param keys key sequences to send
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param keys input parameter
+     *
+     * @return operation result
      */
     private void send(CharSequence... keys) {
         WebElement t = target();
@@ -64,14 +83,34 @@ public class SapKeyboard {
     }
 
     /**
-     * Send a chord (combination) of keys, using Selenium's Keys.chord.
+     * Executes chord operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param keys input parameter
+     *
+     * @return operation result
      */
     private void chord(Keys... keys) {
         send(Keys.chord(keys));
     }
 
     /**
-     * Concatenate provided CharSequence pieces into a single string used by JS fallback.
+     * Executes concat operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param keys input parameter
+     *
+     * @return operation result
      */
     private static String concat(CharSequence... keys) {
         StringBuilder sb = new StringBuilder();
@@ -80,8 +119,18 @@ public class SapKeyboard {
     }
 
     /**
-     * JS fallback to dispatch keyboard events and append characters to an element's value.
-     * This emulates typing at a DOM level for inputs where sendKeys cannot reach.
+     * Executes jsSend operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param element input parameter
+     * @param text input parameter
+     *
+     * @return operation result
      */
     private void jsSend(WebElement element, String text) {
         if (!(driver instanceof JavascriptExecutor)) return;
@@ -106,11 +155,6 @@ public class SapKeyboard {
         }
     }
 
-    /**
-     * Send a function key (F1..F12).
-     *
-     * @param n function key number
-     */
     // Function keys
     public void f(int n) {
         send(Keys.valueOf("F" + n));
@@ -130,70 +174,20 @@ public class SapKeyboard {
     public void f12() { f(12); }
 
     // Common SAP-ish
-    /**
-     * Press Enter key.
-     */
     public void enter() { send(Keys.ENTER); }
-
-    /**
-     * Press SAP 'Back' (mapped to F3 by convention).
-     */
     public void back() { f3(); }
-
-    /**
-     * Press SAP 'Save' (mapped to F11 by convention).
-     */
     public void save() { f11(); }
-
-    /**
-     * Press SAP 'Cancel' (mapped to F12 by convention).
-     */
     public void cancel() { f12(); }
-
-    /**
-     * Press Escape.
-     */
     public void esc() { send(Keys.ESCAPE); }
-
-    /**
-     * Press Tab.
-     */
     public void tab() { send(Keys.TAB); }
-
-    /**
-     * Press Shift+Tab.
-     */
     public void shiftTab() { chord(Keys.SHIFT, Keys.TAB); }
 
     // Combos
-    /**
-     * Send CTRL + k.
-     */
     public void ctrl(Keys k) { chord(Keys.CONTROL, k); }
-
-    /**
-     * Send SHIFT + k.
-     */
     public void shift(Keys k) { chord(Keys.SHIFT, k); }
-
-    /**
-     * Send ALT + k.
-     */
     public void alt(Keys k) { chord(Keys.ALT, k); }
-
-    /**
-     * Send CTRL + SHIFT + k.
-     */
     public void ctrlShift(Keys k) { chord(Keys.CONTROL, Keys.SHIFT, k); }
-
-    /**
-     * Send CTRL + ALT + k.
-     */
     public void ctrlAlt(Keys k) { chord(Keys.CONTROL, Keys.ALT, k); }
-
-    /**
-     * Send CTRL + SHIFT + ALT + k.
-     */
     public void ctrlShiftAlt(Keys k) { chord(Keys.CONTROL, Keys.SHIFT, Keys.ALT, k); }
 
     // Requested

@@ -4,9 +4,15 @@ import org.openqa.selenium.WebDriver;
 
 public interface WebDriverProvider {
     /**
-     * Return the WebDriver instance provided by the test.
+     * Gets getDriver operation.
      *
-     * @return WebDriver or null
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
      */
     WebDriver getDriver();
 }

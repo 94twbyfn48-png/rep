@@ -1,40 +1,57 @@
 package com.yourcompany.sap.components;
 
+import com.thy.testlibrary.browser.Browser; // TODO: Update package if your framework uses a different one.
 import com.yourcompany.sap.engine.SapLocator;
 import org.openqa.selenium.*;
 
 public class SapInput {
     private final WebDriver driver;
 
-    public SapInput(WebDriver driver) {
-        this.driver = driver;
-    }
-
     /**
-     * Create an input helper bound to a WebDriver.
+     * Creates a new SapInput instance.
      *
-     * @param driver webdriver instance
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param browser input parameter
      */
-    public SapInput(WebDriver driver) {
-        this.driver = driver;
+    public SapInput(Browser browser) {
+        this.driver = browser.getDriver();
     }
 
     /**
-     * Find an input element by label heuristics.
+     * Executes byLabel operation.
      *
-     * @param label label text
-     * @return the located element
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param label input parameter
+     *
+     * @return operation result
      */
     public WebElement byLabel(String label) {
         return SapLocator.byLabelHeuristic(driver, label);
     }
 
     /**
-     * Set the input value for the element identified by label.
-     * This uses a select-all + delete then types the provided value.
+     * Sets setByLabel operation.
      *
-     * @param label label text
-     * @param value value to set
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param label input parameter
+     * @param value input parameter
+     *
+     * @return operation result
      */
     public void setByLabel(String label, String value) {
         WebElement el = byLabel(label);
@@ -43,10 +60,17 @@ public class SapInput {
     }
 
     /**
-     * Get the value of an input by label. Falls back to element text when attribute missing.
+     * Gets getValueByLabel operation.
      *
-     * @param label label text
-     * @return value or text
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param label input parameter
+     *
+     * @return operation result
      */
     public String getValueByLabel(String label) {
         WebElement el = byLabel(label);

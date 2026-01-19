@@ -7,16 +7,17 @@ public class SapDropdownAssert {
     private final SapDropdown dropdown;
     private final String label;
 
-    public SapDropdownAssert(SapDropdown dropdown, String label) {
-        this.dropdown = dropdown;
-        this.label = label;
-    }
-
     /**
-     * Create dropdown assertions for the control found by label.
+     * Creates a new SapDropdownAssert instance.
      *
-     * @param dropdown dropdown helper
-     * @param label    label text identifying the dropdown
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param dropdown input parameter
+     * @param label input parameter
      */
     public SapDropdownAssert(SapDropdown dropdown, String label) {
         this.dropdown = dropdown;
@@ -24,7 +25,17 @@ public class SapDropdownAssert {
     }
 
     /**
-     * Assert that the currently selected option text equals expected.
+     * Verifies assertSelected operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param expected input parameter
+     *
+     * @return operation result
      */
     public SapDropdownAssert assertSelected(String expected) {
         Select sel = dropdown.byLabel(label);
@@ -36,7 +47,17 @@ public class SapDropdownAssert {
     }
 
     /**
-     * Assert that the dropdown contains an option with the given visible text.
+     * Verifies assertOptionsContain operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param optionText input parameter
+     *
+     * @return operation result
      */
     public SapDropdownAssert assertOptionsContain(String optionText) {
         Select sel = dropdown.byLabel(label);

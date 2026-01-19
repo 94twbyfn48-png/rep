@@ -1,34 +1,51 @@
 package com.yourcompany.sap.components;
 
+import com.thy.testlibrary.browser.Browser; // TODO: Update package if your framework uses a different one.
 import org.openqa.selenium.*;
 
 public class SapStatusBar {
     private final WebDriver driver;
 
-    public SapStatusBar(WebDriver driver) {
-        this.driver = driver;
-    }
-
     /**
-     * Create a status bar helper.
+     * Creates a new SapStatusBar instance.
      *
-     * @param driver webdriver instance
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param browser input parameter
      */
-    public SapStatusBar(WebDriver driver) {
-        this.driver = driver;
+    public SapStatusBar(Browser browser) {
+        this.driver = browser.getDriver();
     }
 
     /**
-     * Locate the status bar element.
+     * Executes element operation.
      *
-     * @return the status bar WebElement
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
      */
     public WebElement element() {
-        return driver.findElement(By.xpath("//*[contains(@class,'urStatusBar') or contains(@class,'sapUiStatusBar')]") );
+        return driver.findElement(By.xpath("//*[contains(@class,'urStatusBar') or contains(@class,'sapUiStatusBar')]"));
     }
 
     /**
-     * Get trimmed text of the status bar.
+     * Executes text operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
      */
     public String text() {
         return element().getText().trim();

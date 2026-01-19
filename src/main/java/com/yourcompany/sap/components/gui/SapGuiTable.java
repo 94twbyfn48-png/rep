@@ -1,5 +1,6 @@
 package com.yourcompany.sap.components.gui;
 
+import com.thy.testlibrary.browser.Browser; // TODO: Update package if your framework uses a different one.
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,15 +11,17 @@ import java.util.List;
 public class SapGuiTable extends SapGuiElement {
     private final WebElement tableRoot;
 
-    public SapGuiTable(WebDriver driver, WebElement tableRoot) {
-        super(driver, tableRoot);
-        this.tableRoot = tableRoot;
-    }
     /**
-     * Construct a table wrapper for an HTML table root element.
+     * Creates a new SapGuiTable instance.
      *
-     * @param driver    webdriver
-     * @param tableRoot root element of the table
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param driver input parameter
+     * @param tableRoot input parameter
      */
     public SapGuiTable(WebDriver driver, WebElement tableRoot) {
         super(driver, tableRoot);
@@ -26,7 +29,15 @@ public class SapGuiTable extends SapGuiElement {
     }
 
     /**
-     * Return table rows (safe-fail to empty list on errors).
+     * Executes rows operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
      */
     public List<WebElement> rows() {
         try {
@@ -37,7 +48,18 @@ public class SapGuiTable extends SapGuiElement {
     }
 
     /**
-     * Return the cell at the specified 0-based row and 0-based column indices.
+     * Gets getCell operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param rowIndex input parameter
+     * @param colIndex input parameter
+     *
+     * @return operation result
      */
     public WebElement getCell(int rowIndex, int colIndex) {
         List<WebElement> r = rows();
@@ -48,7 +70,17 @@ public class SapGuiTable extends SapGuiElement {
     }
 
     /**
-     * Find the first row index containing the provided text. Returns -1 when not found.
+     * Gets findRowIndexByCellText operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param text input parameter
+     *
+     * @return operation result
      */
     public int findRowIndexByCellText(String text) {
         List<WebElement> r = rows();

@@ -1,33 +1,83 @@
 package com.yourcompany.sap.pages;
 
 import com.yourcompany.sap.asserts.SapAssert;
-import com.yourcompany.sap.components.*;
-import com.yourcompany.sap.engine.*;
-import org.openqa.selenium.WebDriver;
+import com.yourcompany.sap.components.SapCheckbox;
+import com.yourcompany.sap.components.SapDropdown;
+import com.yourcompany.sap.components.SapGrid;
+import com.yourcompany.sap.components.SapInput;
+import com.yourcompany.sap.components.SapPopup;
+import com.yourcompany.sap.components.SapStatusBar;
+import com.yourcompany.sap.components.SapToolbar;
+import com.yourcompany.sap.engine.SapKeyboard;
+import com.yourcompany.sap.engine.SapWait;
 
-public abstract class BaseSapPage {
-    protected final WebDriver browser;
+import javax.annotation.PostConstruct;
 
-    public final SapKeyboard keys;
-    public final SapWait wait;
-    public final SapAssert assertThat;
+// TODO: Update these imports to match your framework packages.
+import com.thy.testlibrary.pages.AbstractPage;
+import com.thy.testlibrary.browser.Browser;
 
-    public final SapGrid grid;
-    public final SapInput input;
-    public final SapCheckbox checkbox;
-    public final SapDropdown dropdown;
-    public final SapStatusBar statusBar;
-    public final SapPopup popup;
-    public final SapToolbar toolbar;
+/**
+ * Base class for SAP GUI for HTML page objects.
+ *
+ * <p>Designed to be used with your existing framework:
+ * <ul>
+ *   <li>{@code AbstractPage} is Spring-managed and exposes {@code protected Browser browser}.</li>
+ *   <li>{@code Browser} wraps Selenium and provides {@code getDriver()}.</li>
+ * </ul>
+ */
+public abstract class BaseSapPage extends AbstractPage {
+
+    /** Keyboard shortcuts and key-chords (F-keys, Ctrl/Shift combos, etc.). */
+    protected SapKeyboard keys;
+
+    /** Waiting utilities (document ready, busy indicator, etc.). */
+    protected SapWait wait;
+
+    /** Assertion facade for common SAP UI checks. */
+    protected SapAssert assertThat;
+
+    /** SAP table/grid helpers (virtualization-aware reading/scrolling). */
+    protected SapGrid grid;
+
+    /** Generic input helpers (text inputs). */
+    protected SapInput input;
+
+    /** Checkbox helpers. */
+    protected SapCheckbox checkbox;
+
+    /** Dropdown / combobox helpers. */
+    protected SapDropdown dropdown;
+
+    /** Status bar helpers (messages, severity, etc.). */
+    protected SapStatusBar statusBar;
+
+    /** Popup/dialog helpers. */
+    protected SapPopup popup;
+
+    /** Toolbar helpers. */
+    protected SapToolbar toolbar;
 
     /**
-     * Base page shared utilities and components for SAP pages.
+     * Initializes all SAP helpers using the framework's {@link Browser}.
      *
-     * @param browser the WebDriver used by the page
+     * <p>Runs after Spring injects {@code browser} into {@link AbstractPage}.
      */
-    public BaseSapPage(WebDriver browser) {
-        this.browser = browser;
-
+    @PostConstruct
+    /**
+     * Creates initSapHelpers operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
+     */
+    protected void initSapHelpers() {
+        // NOTE: AbstractPage already initializes PageFactory elements in its own @PostConstruct.
+        // Here we only wire our helper classes.
         this.keys = new SapKeyboard(browser);
         this.wait = new SapWait(browser);
         this.assertThat = new SapAssert(browser);

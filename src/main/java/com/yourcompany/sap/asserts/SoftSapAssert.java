@@ -6,19 +6,19 @@ import java.util.List;
 public class SoftSapAssert {
     private final List<String> errors = new ArrayList<>();
 
-    public void check(Runnable assertion, String context) {
-        try {
-            assertion.run();
-        } catch (Exception e) {
-            errors.add(context + " -> " + e.getMessage());
-        }
-    }
-
     /**
-     * Execute an assertion lambda and collect any failures as soft errors.
+     * Verifies check operation.
      *
-     * @param assertion runnable performing assertion
-     * @param context   human-friendly context used in failure messages
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param assertion input parameter
+     * @param context input parameter
+     *
+     * @return operation result
      */
     public void check(Runnable assertion, String context) {
         try {
@@ -29,7 +29,15 @@ public class SoftSapAssert {
     }
 
     /**
-     * If any soft assertions failed, throw a combined AssertionError.
+     * Verifies assertAll operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
      */
     public void assertAll() {
         if (!errors.isEmpty()) {

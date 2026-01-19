@@ -1,5 +1,6 @@
 package com.yourcompany.sap.engine;
 
+import com.thy.testlibrary.browser.Browser; // TODO: Update package if your framework uses a different one.
 import org.openqa.selenium.*;
 
 import java.io.File;
@@ -8,29 +9,25 @@ import java.nio.file.*;
 
 public class SapEvidence {
 
-    public static Path screenshot(WebDriver driver, String name, Path dir) {
-        try {
-            Files.createDirectories(dir);
-            File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-            Path dst = dir.resolve(name + ".png");
-            Files.copy(src.toPath(), dst, StandardCopyOption.REPLACE_EXISTING);
-            return dst;
-        } catch (Exception e) {
-            throw new RuntimeException("Screenshot failed", e);
-        }
-    }
     /**
-     * Capture a screenshot and write it to the given directory.
+     * Executes screenshot operation.
      *
-     * @param driver webdriver to capture from
-     * @param name   base file name (without extension)
-     * @param dir    target directory
-     * @return path to the saved screenshot file
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param browser input parameter
+     * @param name input parameter
+     * @param dir input parameter
+     *
+     * @return operation result
      */
-    public static Path screenshot(WebDriver driver, String name, Path dir) {
+    public static Path screenshot(Browser browser, String name, Path dir) {
         try {
             Files.createDirectories(dir);
-            File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            File src = ((TakesScreenshot) browser.getDriver()).getScreenshotAs(OutputType.FILE);
             Path dst = dir.resolve(name + ".png");
             Files.copy(src.toPath(), dst, StandardCopyOption.REPLACE_EXISTING);
             return dst;
@@ -40,17 +37,24 @@ public class SapEvidence {
     }
 
     /**
-     * Dump the current page HTML to a file in the provided directory.
+     * Executes htmlDump operation.
      *
-     * @param driver webdriver to read page source from
-     * @param name   base file name (without extension)
-     * @param dir    target directory
-     * @return path to the saved HTML file
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param browser input parameter
+     * @param name input parameter
+     * @param dir input parameter
+     *
+     * @return operation result
      */
-    public static Path htmlDump(WebDriver driver, String name, Path dir) {
+    public static Path htmlDump(Browser browser, String name, Path dir) {
         try {
             Files.createDirectories(dir);
-            String html = driver.getPageSource();
+            String html = browser.getDriver().getPageSource();
             Path dst = dir.resolve(name + ".html");
             Files.write(dst, html.getBytes(StandardCharsets.UTF_8));
             return dst;

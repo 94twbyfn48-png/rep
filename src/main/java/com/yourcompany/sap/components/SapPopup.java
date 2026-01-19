@@ -1,32 +1,51 @@
 package com.yourcompany.sap.components;
 
+import com.thy.testlibrary.browser.Browser; // TODO: Update package if your framework uses a different one.
 import org.openqa.selenium.*;
 
 public class SapPopup {
     private final WebDriver driver;
 
-    public SapPopup(WebDriver driver) {
-        this.driver = driver;
-    }
-
     /**
-     * Create a popup helper bound to the provided driver.
+     * Creates a new SapPopup instance.
      *
-     * @param driver webdriver instance
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param browser input parameter
      */
-    public SapPopup(WebDriver driver) {
-        this.driver = driver;
+    public SapPopup(Browser browser) {
+        this.driver = browser.getDriver();
     }
 
     /**
-     * Confirm the active popup by sending Enter to the active element.
+     * Executes confirm operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
      */
     public void confirm() {
         driver.switchTo().activeElement().sendKeys(Keys.ENTER);
     }
 
     /**
-     * Cancel the active popup by sending Escape to the active element.
+     * Checks cancel operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
      */
     public void cancel() {
         driver.switchTo().activeElement().sendKeys(Keys.ESCAPE);

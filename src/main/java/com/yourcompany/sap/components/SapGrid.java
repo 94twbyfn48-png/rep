@@ -1,5 +1,6 @@
 package com.yourcompany.sap.components;
 
+import com.thy.testlibrary.browser.Browser; // TODO: Update package if your framework uses a different one.
 import com.yourcompany.sap.engine.SapRetry;
 import org.openqa.selenium.*;
 
@@ -8,10 +9,34 @@ import java.util.*;
 public class SapGrid {
     private final WebDriver driver;
 
-    public SapGrid(WebDriver driver) {
-        this.driver = driver;
+    /**
+     * Creates a new SapGrid instance.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param browser input parameter
+     */
+    public SapGrid(Browser browser) {
+        this.driver = browser.getDriver();
     }
 
+    /**
+     * Performs scrollIntoView operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param e input parameter
+     *
+     * @return operation result
+     */
     private void scrollIntoView(WebElement e) {
         ((JavascriptExecutor) driver).executeScript(
                 "arguments[0].scrollIntoView({block:'center'});", e
@@ -28,25 +53,19 @@ public class SapGrid {
             return cell;
         }, 3, 300);
     }
+
     /**
-     * Find a cell element given a 0-based row index and 1-based column index used by the SAP grid.
+     * Gets getCellInput operation.
      *
-     * @param rowIndex 0-based row index
-     * @param colIndex 1-based column index
-     * @return located cell WebElement
-     */
-    public WebElement findCellByRowCol(int rowIndex, int colIndex) {
-        String xp = String.format("//td[@lsmatrixrowindex='%d' and @lsmatrixcolindex='%d']", rowIndex, colIndex);
-
-        return SapRetry.get(() -> {
-            WebElement cell = driver.findElement(By.xpath(xp));
-            scrollIntoView(cell);
-            return cell;
-        }, 3, 300);
-    }
-
-    /**
-     * If the cell contains a textbox-like span, return that input element, otherwise return the cell itself.
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param cell input parameter
+     *
+     * @return operation result
      */
     public WebElement getCellInput(WebElement cell) {
         try {
@@ -57,7 +76,18 @@ public class SapGrid {
     }
 
     /**
-     * Return the trimmed text of a cell at given coordinates.
+     * Gets getCellText operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param row input parameter
+     * @param col input parameter
+     *
+     * @return operation result
      */
     public String getCellText(int row, int col) {
         WebElement cell = findCellByRowCol(row, col);
@@ -65,7 +95,19 @@ public class SapGrid {
     }
 
     /**
-     * Set the value of a cell by selecting the input and typing the value.
+     * Sets setCellValue operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param row input parameter
+     * @param col input parameter
+     * @param value input parameter
+     *
+     * @return operation result
      */
     public void setCellValue(int row, int col, String value) {
         WebElement cell = findCellByRowCol(row, col);
@@ -82,6 +124,17 @@ public class SapGrid {
         return identifiersFromThColumnHeaders();
     }
 
+    /**
+     * Executes identifiersFromFirstRow operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
+     */
     private Map<Integer, String> identifiersFromFirstRow() {
         Map<Integer, String> ids = new LinkedHashMap<>();
         List<WebElement> cells = driver.findElements(By.xpath("//td[@lsmatrixrowindex='0' and @lsmatrixcolindex]"));
@@ -94,6 +147,17 @@ public class SapGrid {
         return ids;
     }
 
+    /**
+     * Executes identifiersFromThColumnHeaders operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
+     */
     private Map<Integer, String> identifiersFromThColumnHeaders() {
         Map<Integer, String> ids = new LinkedHashMap<>();
         List<WebElement> ths = driver.findElements(By.xpath("//th[@role='columnheader']"));
@@ -120,13 +184,18 @@ public class SapGrid {
         return ids;
     }
 
-    private static String firstNonBlank(String... vals) {
-        for (String v : vals) if (v != null && !v.isBlank()) return v;
-        return null;
-    }
-
     /**
-     * Return the first non-blank string from the provided values.
+     * Executes firstNonBlank operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param vals input parameter
+     *
+     * @return operation result
      */
     private static String firstNonBlank(String... vals) {
         for (String v : vals) if (v != null && !v.isBlank()) return v;
@@ -134,7 +203,18 @@ public class SapGrid {
     }
 
     /**
-     * Parse an int and return fallback when parsing fails.
+     * Executes safeParseInt operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param s input parameter
+     * @param fallback input parameter
+     *
+     * @return operation result
      */
     private static int safeParseInt(String s, int fallback) {
         try {
@@ -144,6 +224,19 @@ public class SapGrid {
         }
     }
 
+    /**
+     * Executes rowAsMap operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param rowIndex input parameter
+     *
+     * @return operation result
+     */
     public Map<String, String> rowAsMap(int rowIndex) {
         Map<Integer, String> ids = identifiers();
         if (ids.isEmpty()) throw new RuntimeException("No identifiers found (row0 td or th columnheader).");
@@ -173,6 +266,17 @@ public class SapGrid {
         return driver.findElement(By.xpath("//td"));
     }
 
+    /**
+     * Gets getVisibleRowIndices operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
+     */
     private Set<Integer> getVisibleRowIndices() {
         Set<Integer> rows = new HashSet<>();
         List<WebElement> tds = driver.findElements(By.xpath("//td[@lsmatrixrowindex and @lsmatrixcolindex]"));
@@ -187,6 +291,19 @@ public class SapGrid {
         return rows;
     }
 
+    /**
+     * Gets findScrollableAncestor operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param element input parameter
+     *
+     * @return operation result
+     */
     private WebElement findScrollableAncestor(WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         Object res = js.executeScript(
@@ -204,23 +321,75 @@ public class SapGrid {
         return (WebElement) res;
     }
 
+    /**
+     * Performs scrollDownOnePage operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param scroller input parameter
+     *
+     * @return operation result
+     */
     private void scrollDownOnePage(WebElement scroller) {
         ((JavascriptExecutor) driver).executeScript(
                 "arguments[0].scrollTop = arguments[0].scrollTop + arguments[0].clientHeight;", scroller
         );
     }
 
+    /**
+     * Performs scrollUpOnePage operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param scroller input parameter
+     *
+     * @return operation result
+     */
     private void scrollUpOnePage(WebElement scroller) {
         ((JavascriptExecutor) driver).executeScript(
                 "arguments[0].scrollTop = Math.max(0, arguments[0].scrollTop - arguments[0].clientHeight);", scroller
         );
     }
 
+    /**
+     * Gets getScrollTop operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param scroller input parameter
+     *
+     * @return operation result
+     */
     private long getScrollTop(WebElement scroller) {
         Object val = ((JavascriptExecutor) driver).executeScript("return arguments[0].scrollTop;", scroller);
         return (val instanceof Number) ? ((Number) val).longValue() : -1;
     }
 
+    /**
+     * Executes sleep operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param ms input parameter
+     *
+     * @return operation result
+     */
     private static void sleep(long ms) {
         try {
             Thread.sleep(ms);
@@ -230,14 +399,6 @@ public class SapGrid {
 
     // ===== Requested: scroll to row =====
 
-    /**
-     * Scroll the grid until the target row becomes visible or until maxScrolls
-     * scroll attempts are exhausted. Returns true when the row is visible.
-     *
-     * @param targetRow target row index to reveal
-     * @param maxScrolls maximum number of scroll attempts
-     * @return true if targetRow became visible
-     */
     public boolean scrollToRow(int targetRow, int maxScrolls) {
         WebElement anchor = findFirstDataCellSafe();
         WebElement scroller = findScrollableAncestor(anchor);
@@ -269,15 +430,6 @@ public class SapGrid {
 
     // ===== Virtualized full read =====
 
-    /**
-     * Read a potentially virtualized table by repeatedly scrolling and collecting
-     * visible rows until either the maximum row cap is reached or stalls exceed
-     * the provided stallRounds.
-     *
-     * @param maxRowsCap maximum number of rows to collect
-     * @param stallRounds number of rounds with no progress before stopping
-     * @return list of row maps
-     */
     public List<Map<String, String>> readTableVirtualized(int maxRowsCap, int stallRounds) {
         Map<Integer, String> ids = identifiers();
         if (ids.isEmpty()) throw new RuntimeException("No identifiers found for grid.");

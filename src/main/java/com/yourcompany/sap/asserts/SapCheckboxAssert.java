@@ -6,16 +6,17 @@ public class SapCheckboxAssert {
     private final SapCheckbox checkbox;
     private final String label;
 
-    public SapCheckboxAssert(SapCheckbox checkbox, String label) {
-        this.checkbox = checkbox;
-        this.label = label;
-    }
-
     /**
-     * Create checkbox assertions for the control found by label.
+     * Creates a new SapCheckboxAssert instance.
      *
-     * @param checkbox checkbox helper
-     * @param label    label text identifying the checkbox
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param checkbox input parameter
+     * @param label input parameter
      */
     public SapCheckboxAssert(SapCheckbox checkbox, String label) {
         this.checkbox = checkbox;
@@ -23,7 +24,15 @@ public class SapCheckboxAssert {
     }
 
     /**
-     * Assert that the checkbox is checked.
+     * Verifies assertChecked operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
      */
     public SapCheckboxAssert assertChecked() {
         if (!checkbox.isChecked(label)) {
@@ -33,7 +42,15 @@ public class SapCheckboxAssert {
     }
 
     /**
-     * Assert that the checkbox is unchecked.
+     * Verifies assertUnchecked operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
      */
     public SapCheckboxAssert assertUnchecked() {
         if (checkbox.isChecked(label)) {

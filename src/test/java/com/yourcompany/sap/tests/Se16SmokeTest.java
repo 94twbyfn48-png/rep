@@ -16,11 +16,33 @@ public class Se16SmokeTest implements WebDriverProvider {
     private WebDriver browser;
 
     @Override
+    /**
+     * Gets getDriver operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
+     */
     public WebDriver getDriver() {
         return browser;
     }
 
     @BeforeEach
+    /**
+     * Sets setup operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
+     */
     void setup() {
         WebDriverManager.chromedriver().setup();
         browser = new ChromeDriver();
@@ -28,11 +50,33 @@ public class Se16SmokeTest implements WebDriverProvider {
     }
 
     @AfterEach
+    /**
+     * Executes teardown operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
+     */
     void teardown() {
         if (browser != null) browser.quit();
     }
 
     @Test
+    /**
+     * Executes se16_virtualized_and_scrollToRow operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
+     */
     void se16_virtualized_and_scrollToRow() {
         Se16Page se16 = new Se16Page(browser);
 

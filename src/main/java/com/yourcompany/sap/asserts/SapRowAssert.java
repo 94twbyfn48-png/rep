@@ -8,15 +8,17 @@ public class SapRowAssert {
     private final int rowIndex;
     private final Map<String, String> row;
 
-    public SapRowAssert(SapGrid grid, int rowIndex) {
-        this.rowIndex = rowIndex;
-        this.row = grid.rowAsMap(rowIndex);
-    }
     /**
-     * Create assertions for the given row index using data read from the grid.
+     * Creates a new SapRowAssert instance.
      *
-     * @param grid     grid helper
-     * @param rowIndex zero-based row index
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param grid input parameter
+     * @param rowIndex input parameter
      */
     public SapRowAssert(SapGrid grid, int rowIndex) {
         this.rowIndex = rowIndex;
@@ -24,7 +26,18 @@ public class SapRowAssert {
     }
 
     /**
-     * Assert that the column value equals expected.
+     * Verifies assertEquals operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param col input parameter
+     * @param expected input parameter
+     *
+     * @return operation result
      */
     public SapRowAssert assertEquals(String col, String expected) {
         String actual = row.get(col);
@@ -36,7 +49,17 @@ public class SapRowAssert {
     }
 
     /**
-     * Assert that the column value is not empty.
+     * Verifies assertNotEmpty operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param col input parameter
+     *
+     * @return operation result
      */
     public SapRowAssert assertNotEmpty(String col) {
         String v = row.get(col);
@@ -47,7 +70,18 @@ public class SapRowAssert {
     }
 
     /**
-     * Assert that the column value contains the provided substring.
+     * Verifies assertContains operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param col input parameter
+     * @param part input parameter
+     *
+     * @return operation result
      */
     public SapRowAssert assertContains(String col, String part) {
         String v = row.get(col);

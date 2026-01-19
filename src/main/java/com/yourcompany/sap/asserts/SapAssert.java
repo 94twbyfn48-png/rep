@@ -1,79 +1,67 @@
 package com.yourcompany.sap.asserts;
 
-import com.yourcompany.sap.components.*;
-import org.openqa.selenium.WebDriver;
+import com.thy.testlibrary.browser.Browser; // TODO: Update package if your framework uses a different one.
+import com.yourcompany.sap.components.SapCheckbox;
+import com.yourcompany.sap.components.SapDropdown;
+import com.yourcompany.sap.components.SapGrid;
+import com.yourcompany.sap.components.SapInput;
+import com.yourcompany.sap.components.SapStatusBar;
 
+/**
+ * Root assertion facade that creates specific assertion helpers.
+ */
 public class SapAssert {
-    private final WebDriver driver;
 
-    public SapAssert(WebDriver driver) {
-        this.driver = driver;
-    }
+    private final Browser browser;
+
     /**
-     * Create an assertion helper bound to the given driver.
+     * @param browser Your framework Browser wrapper.
+     */
+    /**
+     * Creates a new SapAssert instance.
      *
-     * @param driver webdriver used for assertions
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param browser input parameter
      */
-    public SapAssert(WebDriver driver) {
-        this.driver = driver;
+    public SapAssert(Browser browser) {
+        this.browser = browser;
     }
 
-    /**
-     * Return a `SapGrid` assertion helper.
-     */
-    public SapGrid grid() { return new SapGrid(driver); }
+    /** @return Grid helper bound to current Browser instance. */
+    public SapGrid grid() { return new SapGrid(browser); }
 
-    /**
-     * Return a `SapInput` helper instance.
-     */
-    public SapInput inputComponent() { return new SapInput(driver); }
+    /** @return Input helper bound to current Browser instance. */
+    public SapInput inputComponent() { return new SapInput(browser); }
 
-    /**
-     * Return a `SapCheckbox` helper instance.
-     */
-    public SapCheckbox checkboxComponent() { return new SapCheckbox(driver); }
+    /** @return Checkbox helper bound to current Browser instance. */
+    public SapCheckbox checkboxComponent() { return new SapCheckbox(browser); }
 
-    /**
-     * Return a `SapDropdown` helper instance.
-     */
-    public SapDropdown dropdownComponent() { return new SapDropdown(driver); }
+    /** @return Dropdown helper bound to current Browser instance. */
+    public SapDropdown dropdownComponent() { return new SapDropdown(browser); }
 
-    /**
-     * Return a `SapStatusBar` helper instance.
-     */
-    public SapStatusBar statusBarComponent() { return new SapStatusBar(driver); }
+    /** @return StatusBar helper bound to current Browser instance. */
+    public SapStatusBar statusBarComponent() { return new SapStatusBar(browser); }
 
-    /**
-     * Start assertions for a specific row.
-     *
-     * @param rowIndex zero-based row index
-     */
+    /** @return Row assertion helper. */
     public SapRowAssert row(int rowIndex) { return new SapRowAssert(grid(), rowIndex); }
 
-    /**
-     * Start assertions for a table read with a maximum row cap.
-     *
-     * @param maxRowsCap maximum rows to read for assertions
-     */
+    /** @return Table assertion helper. */
     public SapTableAssert table(int maxRowsCap) { return new SapTableAssert(grid(), maxRowsCap); }
 
-    /**
-     * Assertions scoped to an input identified by label.
-     */
+    /** @return Input assertion helper for the given label. */
     public SapInputAssert input(String label) { return new SapInputAssert(inputComponent(), label); }
 
-    /**
-     * Assertions scoped to a checkbox identified by label.
-     */
+    /** @return Checkbox assertion helper for the given label. */
     public SapCheckboxAssert checkbox(String label) { return new SapCheckboxAssert(checkboxComponent(), label); }
 
-    /**
-     * Assertions scoped to a dropdown identified by label.
-     */
+    /** @return Dropdown assertion helper for the given label. */
     public SapDropdownAssert dropdown(String label) { return new SapDropdownAssert(dropdownComponent(), label); }
 
-    /**
-     * Assertions for the status bar.
-     */
+    /** @return Status bar assertion helper. */
     public SapStatusBarAssert statusBar() { return new SapStatusBarAssert(statusBarComponent()); }
 }

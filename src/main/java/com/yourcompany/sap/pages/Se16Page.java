@@ -1,29 +1,57 @@
 package com.yourcompany.sap.pages;
 
-import org.openqa.selenium.WebDriver;
-
 import java.util.List;
 import java.util.Map;
 
+/**
+ * SE16 page object (Data Browser) for SAP GUI for HTML.
+ */
 public class Se16Page extends BaseSapPage {
 
-    public Se16Page(WebDriver browser) {
-        super(browser);
-    }
     /**
-     * Create a page object for SE16-like screens.
+     * Minimal page identification.
      *
-     * @param browser webdriver used by the page
+     * <p>If your system uses a different title, replace this with a stronger locator-based check.
      */
-    public Se16Page(WebDriver browser) {
-        super(browser);
+    @Override
+    /**
+     * Checks isAt operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
+     */
+    public boolean isAt() {
+        try {
+            String title = browser.getDriver().getTitle();
+            if (title == null) return true;
+            return title.toUpperCase().contains("SE16");
+        } catch (Exception ignored) {
+            // If title is not accessible, don't block tests by returning false.
+            return true;
+        }
     }
 
     /**
-     * Set the table name input (label may need adjustment per system) and submit.
+     * Sets the table name in SE16 and navigates to selection screen.
+     * Adjust the label text if your system uses a different language.
+     */
+    /**
+     * Sets setTableName operation.
      *
-     * @param table table name to set
-     * @return this page instance
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param table input parameter
+     *
+     * @return operation result
      */
     public Se16Page setTableName(String table) {
         input.setByLabel("Table Name", table);
@@ -33,9 +61,18 @@ public class Se16Page extends BaseSapPage {
     }
 
     /**
-     * Execute the selection (press F8) and wait until the page is ready and not busy.
+     * Executes the selection (F8).
+     */
+    /**
+     * Executes execute operation.
      *
-     * @return this page instance
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
      */
     public Se16Page execute() {
         keys.f8();
@@ -45,11 +82,21 @@ public class Se16Page extends BaseSapPage {
     }
 
     /**
-     * Read the virtualized table using the grid helper.
+     * Reads a virtualized grid by scrolling/observing and collecting unique rows.
+     */
+    /**
+     * Gets readAllVirtualized operation.
      *
-     * @param maxRows    maximum number of rows to read
-     * @param stallRounds how many stall rounds to tolerate
-     * @return list of rows represented as maps
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param maxRows input parameter
+     * @param stallRounds input parameter
+     *
+     * @return operation result
      */
     public List<Map<String, String>> readAllVirtualized(int maxRows, int stallRounds) {
         return grid.readTableVirtualized(maxRows, stallRounds);

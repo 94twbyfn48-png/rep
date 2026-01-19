@@ -1,5 +1,6 @@
 package com.yourcompany.sap.components.gui;
 
+import com.thy.testlibrary.browser.Browser; // TODO: Update package if your framework uses a different one.
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,12 +8,17 @@ import org.openqa.selenium.WebElement;
 public class SapGuiDialog extends SapGuiElement {
     private final WebElement root;
 
-    public SapGuiDialog(WebDriver driver, WebElement root) {
-        super(driver, root);
-        this.root = root;
-    }
     /**
-     * Create dialog helper.
+     * Creates a new SapGuiDialog instance.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param driver input parameter
+     * @param root input parameter
      */
     public SapGuiDialog(WebDriver driver, WebElement root) {
         super(driver, root);
@@ -20,14 +26,30 @@ public class SapGuiDialog extends SapGuiElement {
     }
 
     /**
-     * Return true when the dialog element is displayed.
+     * Checks isOpen operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
      */
     public boolean isOpen() {
         return isDisplayed();
     }
 
     /**
-     * Attempt to close the dialog using common selectors; falls back to JS removal.
+     * Performs close operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
      */
     public void close() {
         try {

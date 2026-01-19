@@ -6,15 +6,17 @@ public class SapInputAssert {
     private final SapInput input;
     private final String label;
 
-    public SapInputAssert(SapInput input, String label) {
-        this.input = input;
-        this.label = label;
-    }
     /**
-     * Create assertions scoped to a specific input identified by label.
+     * Creates a new SapInputAssert instance.
      *
-     * @param input input helper
-     * @param label label text to identify the input
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param input input parameter
+     * @param label input parameter
      */
     public SapInputAssert(SapInput input, String label) {
         this.input = input;
@@ -22,7 +24,17 @@ public class SapInputAssert {
     }
 
     /**
-     * Assert that the input value equals the expected string.
+     * Verifies assertValue operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param expected input parameter
+     *
+     * @return operation result
      */
     public SapInputAssert assertValue(String expected) {
         String actual = input.getValueByLabel(label);
@@ -33,7 +45,15 @@ public class SapInputAssert {
     }
 
     /**
-     * Assert that the input value is empty.
+     * Verifies assertEmpty operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
      */
     public SapInputAssert assertEmpty() {
         String actual = input.getValueByLabel(label);
@@ -44,7 +64,15 @@ public class SapInputAssert {
     }
 
     /**
-     * Assert that the input value is not empty.
+     * Verifies assertNotEmpty operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
      */
     public SapInputAssert assertNotEmpty() {
         String actual = input.getValueByLabel(label);
@@ -55,7 +83,17 @@ public class SapInputAssert {
     }
 
     /**
-     * Assert that the input's maxlength attribute equals the expected value.
+     * Verifies assertMaxLength operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @param expected input parameter
+     *
+     * @return operation result
      */
     public SapInputAssert assertMaxLength(int expected) {
         String maxLenStr = input.byLabel(label).getAttribute("maxlength");
@@ -70,7 +108,15 @@ public class SapInputAssert {
     }
 
     /**
-     * Assert that the input is enabled.
+     * Verifies assertEnabled operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
      */
     public SapInputAssert assertEnabled() {
         if (!input.byLabel(label).isEnabled()) {
@@ -80,7 +126,15 @@ public class SapInputAssert {
     }
 
     /**
-     * Assert that the input is disabled.
+     * Verifies assertDisabled operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
      */
     public SapInputAssert assertDisabled() {
         if (input.byLabel(label).isEnabled()) {
@@ -90,7 +144,15 @@ public class SapInputAssert {
     }
 
     /**
-     * Assert that the input is readonly (by checking common attributes).
+     * Verifies assertReadOnly operation.
+     *
+     * <p><b>Implementation notes</b></p>
+     * <ul>
+     *   <li>Uses the framework <code>Browser</code> wrapper and calls Selenium via <code>browser.getDriver()</code>.</li>
+     *   <li>Designed to be used from Page Objects extending <code>AbstractPage</code>.</li>
+     * </ul>
+     *
+     * @return operation result
      */
     public SapInputAssert assertReadOnly() {
         String ro = input.byLabel(label).getAttribute("readonly");
